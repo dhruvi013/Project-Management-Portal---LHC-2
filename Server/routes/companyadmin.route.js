@@ -16,13 +16,13 @@ router.post('/login', async(req, res) => {
 
 // Register company admin
 router.post('/register', async (req, res) => {
-  const { companyName, adminName, adminEmail, adminPassword } = req.body;
+  const { companyName, adminName, adminEmail, adminPassword, packageName } = req.body;
   try {
     const existingCompany = await Company.findOne({ adminEmail });
     if (existingCompany) {
       return res.status(400).json({ message: 'Email is already registered' });
     }
-    const newCompany = new Company({ companyName, adminName, adminEmail, adminPassword });
+    const newCompany = new Company({ companyName, adminName, adminEmail, adminPassword, packageName });
     await newCompany.save();
     res.status(201).json({ success: true, message: 'Registration successful. Awaiting admin approval.' });
   } catch (error) {

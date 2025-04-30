@@ -5,6 +5,7 @@ const companySchema = new mongoose.Schema({
   adminName: { type: String, required: true },
   adminEmail: { type: String, required: true, unique: true },
   adminPassword: { type: String, required: true },
+  packageName: { type: String, required: true }, // ✅ Newly added field
   status: { type: String, default: 'Pending' }, // 'Pending' or 'Approved'
   createdAt: { type: Date, default: Date.now },
 });

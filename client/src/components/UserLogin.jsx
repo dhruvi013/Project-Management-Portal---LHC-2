@@ -4,12 +4,16 @@ import axios from 'axios';
 
 const UserLogin = () => {
   const navigate = useNavigate();
+
+  // Use 'packageName' in state instead of reserved word 'package'
   const [form, setForm] = useState({
     companyName: '',
     adminName: '',
     adminEmail: '',
     adminPassword: '',
+    packageName: '',
   });
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -25,17 +29,26 @@ const UserLogin = () => {
     setError('');
     setSuccess('');
 
-    if (!form.companyName || !form.adminName || !form.adminEmail || !form.adminPassword) {
+    const { companyName, adminName, adminEmail, adminPassword, packageName } = form;
+
+    if (!companyName || !adminName || !adminEmail || !adminPassword || !packageName) {
       setError('All fields are required.');
       setLoading(false);
       return;
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/api/companyadmin/register', form);
+      // Send 'package' as key, mapping it from 'packageName'
+      const res = await axios.post('http://localhost:5000/api/companyadmin/register', {
+        companyName,
+        adminName,
+        adminEmail,
+        adminPassword,
+        packageName, // map here
+      });
+
       if (res.data.success) {
         setSuccess('Registration successful. Awaiting approval from the super admin.');
-        // Optionally redirect after delay
         setTimeout(() => navigate('/companyadminlogin'), 3000);
       }
     } catch (err) {
@@ -84,6 +97,17 @@ const UserLogin = () => {
             onChange={handleChange}
             placeholder="Admin Password"
           />
+          <select
+            style={styles.input}
+            name="packageName"
+            value={form.packageName}
+            onChange={handleChange}
+          >
+            <option value="">-- Select Package --</option>
+            <option value="Starter">Starter</option>
+            <option value="Professional">Professional</option>
+            <option value="Enterprise">Enterprise</option>
+          </select>
           <button style={styles.button} type="submit" disabled={loading}>
             {loading ? 'Registering...' : 'Register'}
           </button>
