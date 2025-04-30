@@ -6,6 +6,9 @@ import UserLogin from "./components/UserLogin";
 import AdminDashboard from "./components/AdminDashboard";
 import CompanyAdminLogin from "./components/companyadminlogin";
 import Project from "./components/Project";
+import AddProject from "./components/AddProjectForm";
+import AddEmployee from "./components/AddEmployeeForm";
+import AssignEmployeeToProject from "./components/AssignEmployeeToProject";
 
 const App = () => {
   return (
@@ -17,6 +20,9 @@ const App = () => {
         <Route path="/admindashboard" element={<AdminDashboard />} />
         <Route path="/companyadminlogin" element={<CompanyAdminLogin />} />
         <Route path="/project" element={<Project />} />
+        <Route path="/addproject" element={<AddProject />} />
+        <Route path="/addemployee" element={<AddEmployee />} />
+        <Route path="/assignemployee" element={<AssignEmployeeToProject />} />
 
 
         <Route path="/" element={<HomePage />} />

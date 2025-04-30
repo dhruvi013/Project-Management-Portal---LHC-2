@@ -100,7 +100,7 @@ const styles = {
   button: {
     width: '100%',
     padding: '10px',
-    backgroundColor: '#28a745',
+    backgroundColor: '#007bff',
     color: '#fff',
     fontSize: '16px',
     border: 'none',

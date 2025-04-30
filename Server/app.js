@@ -15,6 +15,12 @@ const adminRoutes = require('./routes/admin.route');
 app.use('/api/admin', adminRoutes);
 const companyadminRoutes = require('./routes/companyadmin.route');
 app.use('/api/companyadmin', companyadminRoutes);
+const employeeRoute = require('./routes/employee.route');
+app.use('/api/employee', employeeRoute);
+const projectRoute = require('./routes/project.route');
+app.use('/api/project', projectRoute);
+
+
 
 // Server
 app.listen(5000, () => console.log('Server running on port 5000'));
