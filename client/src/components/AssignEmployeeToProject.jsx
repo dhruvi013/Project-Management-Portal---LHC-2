@@ -16,7 +16,7 @@ function AssignEmployeeToProject() {
         setEmployees(empRes.data);
         setProjects(projRes.data);
       } catch (err) {
-        setMsg("❌ Failed to load employees or projects.");
+        setMsg(" Failed to load employees or projects.");
       }
     };
     fetchData();
@@ -25,7 +25,7 @@ function AssignEmployeeToProject() {
   const handleAssign = async (e) => {
     e.preventDefault();
     if (!selectedEmployee || !selectedProject) {
-      setMsg("❌ Please select both employee and project.");
+      setMsg("Please select both employee and project.");
       return;
     }
     try {
@@ -33,11 +33,11 @@ function AssignEmployeeToProject() {
         employeeId: selectedEmployee,
         projectId: selectedProject,
       });
-      setMsg("✅ Employee assigned successfully!");
+      setMsg(" Employee assigned successfully!");
       setSelectedEmployee('');
       setSelectedProject('');
     } catch (err) {
-      setMsg(`❌ ${err?.response?.data?.message || 'Error assigning employee'}`);
+      setMsg(`${err?.response?.data?.message || 'Error assigning employee'}`);
     }
   };
 
