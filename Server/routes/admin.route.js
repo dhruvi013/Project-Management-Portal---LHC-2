@@ -36,7 +36,7 @@ router.get('/packages', async (req, res) => {
   }
 });
 
-// ✅ Delete package by ID
+//Delete package by ID
 router.delete('/packages/:id', async (req, res) => {
   try {
     const deleted = await Package.findByIdAndDelete(req.params.id);

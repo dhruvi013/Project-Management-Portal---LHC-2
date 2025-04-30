@@ -1,45 +1,41 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const UserLogin = () => {
-  const navigate = useNavigate();
-  const [form, setForm] = useState({
-    companyName: '',
-    adminName: '',
-    adminEmail: '',
-    adminPassword: '',
-  });
-  const [loading, setLoading] = useState(false);
+const CompanyAdminLogin = () => {
+  const [form, setForm] = useState({ adminEmail: '', adminPassword: '' });
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm((prevForm) => ({ ...prevForm, [name]: value }));
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError('');
-    setSuccess('');
+    setLoading(true);
 
-    if (!form.companyName || !form.adminName || !form.adminEmail || !form.adminPassword) {
+    if (!form.adminEmail || !form.adminPassword) {
       setError('All fields are required.');
       setLoading(false);
       return;
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/api/companyadmin/register', form);
+      const res = await axios.post('http://localhost:5000/api/companyadmin/login', form);
+
       if (res.data.success) {
-        setSuccess('Registration successful. Awaiting approval from the super admin.');
-        // Optionally redirect after delay
-        setTimeout(() => navigate('/companyadminlogin'), 3000);
+        // Optional: Save token or admin ID to localStorage or cookie
+        // localStorage.setItem("adminToken", res.data.token);
+        navigate('/company/dashboard'); // Redirect after successful login
+      } else {
+        setError('Invalid login credentials.');
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Error occurred during registration.');
+      setError(err.response?.data?.message || 'Login failed. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -48,26 +44,9 @@ const UserLogin = () => {
   return (
     <div style={styles.container}>
       <div style={styles.card}>
-        <h2>Company Admin Sign-Up</h2>
+        <h2>Company Admin Login</h2>
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        {success && <p style={{ color: 'green' }}>{success}</p>}
-        <form onSubmit={handleSubmit}>
-          <input
-            style={styles.input}
-            type="text"
-            name="companyName"
-            value={form.companyName}
-            onChange={handleChange}
-            placeholder="Company Name"
-          />
-          <input
-            style={styles.input}
-            type="text"
-            name="adminName"
-            value={form.adminName}
-            onChange={handleChange}
-            placeholder="Admin Name"
-          />
+        <form onSubmit={handleLogin}>
           <input
             style={styles.input}
             type="email"
@@ -82,15 +61,12 @@ const UserLogin = () => {
             name="adminPassword"
             value={form.adminPassword}
             onChange={handleChange}
-            placeholder="Admin Password"
+            placeholder="Password"
           />
           <button style={styles.button} type="submit" disabled={loading}>
-            {loading ? 'Registering...' : 'Register'}
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
-        <p style={{ marginTop: '15px' }}>
-          Already have an account? <Link to="/companyadminlogin">Login here</Link>
-        </p>
       </div>
     </div>
   );
@@ -124,7 +100,7 @@ const styles = {
   button: {
     width: '100%',
     padding: '10px',
-    backgroundColor: '#007bff',
+    backgroundColor: '#28a745',
     color: '#fff',
     fontSize: '16px',
     border: 'none',
@@ -134,4 +110,4 @@ const styles = {
   },
 };
 
-export default UserLogin;
+export default CompanyAdminLogin;

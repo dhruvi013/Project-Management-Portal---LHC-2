@@ -2,6 +2,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PackageManager from "./components/packagemanager";
 import AdminLogin from "./components/AdminLogin";
 import HomePage from "./components/HomePage";
+import UserLogin from "./components/UserLogin";
+import AdminDashboard from "./components/AdminDashboard";
+import CompanyAdminLogin from "./components/companyadminlogin";
 
 const App = () => {
   return (
@@ -9,7 +12,10 @@ const App = () => {
       <Routes>
         <Route path="/admin/packages" element={<PackageManager />} />
         <Route path="/admin/login" element={<AdminLogin />} />
-        {/* <Route path="/user/login" element={<UserLogin></UserLogin>} /> */}
+        <Route path="/user/login" element={<UserLogin />} />
+        <Route path="/admindashboard" element={<AdminDashboard />} />
+        <Route path="/companyadminlogin" element={<CompanyAdminLogin />} />
+
         <Route path="/" element={<HomePage />} />
 
       </Routes>
