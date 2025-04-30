@@ -5,6 +5,7 @@ import HomePage from "./components/HomePage";
 import UserLogin from "./components/UserLogin";
 import AdminDashboard from "./components/AdminDashboard";
 import CompanyAdminLogin from "./components/companyadminlogin";
+import Project from "./components/Project";
 
 const App = () => {
   return (
@@ -15,6 +16,8 @@ const App = () => {
         <Route path="/user/login" element={<UserLogin />} />
         <Route path="/admindashboard" element={<AdminDashboard />} />
         <Route path="/companyadminlogin" element={<CompanyAdminLogin />} />
+        <Route path="/project" element={<Project />} />
+
 
         <Route path="/" element={<HomePage />} />
 

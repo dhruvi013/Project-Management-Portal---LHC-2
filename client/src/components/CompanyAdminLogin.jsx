@@ -25,12 +25,13 @@ const CompanyAdminLogin = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/api/companyadmin/login', form);
+      const res = await axios.post('http://localhost:5000/api/companyadmin/login', {
+        username: form.adminEmail, // Send username instead of adminEmail
+        password: form.adminPassword, // Send password
+      });
 
       if (res.data.success) {
-        // Optional: Save token or admin ID to localStorage or cookie
-        // localStorage.setItem("adminToken", res.data.token);
-        navigate('/company/dashboard'); // Redirect after successful login
+        navigate('/project');
       } else {
         setError('Invalid login credentials.');
       }
@@ -40,7 +41,6 @@ const CompanyAdminLogin = () => {
       setLoading(false);
     }
   };
-
   return (
     <div style={styles.container}>
       <div style={styles.card}>

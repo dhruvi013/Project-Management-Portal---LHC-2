@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';  // Import Link
 
 const PackageManager = () => {
   const [auth, setAuth] = useState(false);
@@ -108,6 +109,13 @@ const PackageManager = () => {
             </li>
           ))}
         </ul>
+
+        {/* Add the Link to the request page here */}
+        <div style={{ marginTop: '20px' }}>
+          <Link to="/admindashboard" style={styles.link}>
+            Go to Request Page
+          </Link>
+        </div>
       </div>
     </div>
   );
@@ -175,6 +183,11 @@ const styles = {
     borderRadius: '4px',
     cursor: 'pointer',
     fontSize: '14px',
+  },
+  link: {
+    color: '#007bff',
+    textDecoration: 'none',
+    fontSize: '16px',
   },
 };
 

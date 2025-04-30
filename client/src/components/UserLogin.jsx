@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
 const UserLogin = () => {
   const navigate = useNavigate();
 
-  // Use 'packageName' in state instead of reserved word 'package'
   const [form, setForm] = useState({
     companyName: '',
     adminName: '',
@@ -17,6 +16,21 @@ const UserLogin = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [packages, setPackages] = useState([]); // State to store packages
+
+  useEffect(() => {
+    // Fetch packages from the backend when the component mounts
+    const fetchPackages = async () => {
+      try {
+        const res = await axios.get('http://localhost:5000/api/admin/packages');
+        setPackages(res.data); // Assuming the response is an array of packages
+      } catch (err) {
+        setError('Error fetching packages');
+      }
+    };
+
+    fetchPackages();
+  }, []); // Empty dependency array to run this effect only once on component mount
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,7 +52,6 @@ const UserLogin = () => {
     }
 
     try {
-      // Send 'package' as key, mapping it from 'packageName'
       const res = await axios.post('http://localhost:5000/api/companyadmin/register', {
         companyName,
         adminName,
@@ -104,9 +117,11 @@ const UserLogin = () => {
             onChange={handleChange}
           >
             <option value="">-- Select Package --</option>
-            <option value="Starter">Starter</option>
-            <option value="Professional">Professional</option>
-            <option value="Enterprise">Enterprise</option>
+            {packages.map((pkg) => (
+              <option key={pkg._id} value={pkg.name}>
+                {pkg.name}
+              </option>
+            ))}
           </select>
           <button style={styles.button} type="submit" disabled={loading}>
             {loading ? 'Registering...' : 'Register'}
